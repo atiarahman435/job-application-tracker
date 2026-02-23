@@ -11,7 +11,22 @@
   <h1>Job Application Tracker</h1>
 
   <div id="jobsContainer"></div>
+<h2 style="display:flex; justify-content:space-between; align-items:center;">
+  <span>Available Jobs</span>
+  <span id="tabCountText">0 jobs</span>
+</h2>
 
+<div style="display:flex; gap:10px; margin:10px 0;">
+  <button data-tab="all" class="tabBtn">All</button>
+  <button data-tab="interview" class="tabBtn">Interview</button>
+  <button data-tab="rejected" class="tabBtn">Rejected</button>
+</div>
+
+<div id="emptyState" style="display:none; padding:40px 10px; text-align:center; border:1px solid #ddd; border-radius:8px; margin:10px 0;">
+  <div style="font-size:40px;">📄</div>
+  <h3 style="margin:10px 0 5px;">No jobs available</h3>
+  <p style="margin:0;">Check back soon for new job opportunities</p>
+</div>
   <script src="script.js"></script>
 
 </body>
