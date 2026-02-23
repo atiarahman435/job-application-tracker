@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Application Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-  <h1>Job Application Tracker</h1>
+  <body>
+    <h1>Job Application Tracker</h1>
 
-  <div id="jobsContainer"></div>
-<h2 style="display:flex; justify-content:space-between; align-items:center;">
-  <span>Available Jobs</span>
-  <span id="tabCountText">0 jobs</span>
-</h2>
+    <!-- Available Jobs Header -->
+    <h2 class="section-header">
+      <span>Available Jobs</span>
+      <span id="tabCountText">0 jobs</span>
+    </h2>
 
-<div style="display:flex; gap:10px; margin:10px 0;">
-  <button data-tab="all" class="tabBtn">All</button>
-  <button data-tab="interview" class="tabBtn">Interview</button>
-  <button data-tab="rejected" class="tabBtn">Rejected</button>
-</div>
+    <!-- Tabs -->
+    <div class="tabs">
+      <button data-tab="all" class="tabBtn">All</button>
+      <button data-tab="interview" class="tabBtn">Interview</button>
+      <button data-tab="rejected" class="tabBtn">Rejected</button>
+    </div>
 
-<div id="emptyState" style="display:none; padding:40px 10px; text-align:center; border:1px solid #ddd; border-radius:8px; margin:10px 0;">
-  <div style="font-size:40px;">📄</div>
-  <h3 style="margin:10px 0 5px;">No jobs available</h3>
-  <p style="margin:0;">Check back soon for new job opportunities</p>
-</div>
-  <script src="script.js"></script>
+    <!-- Empty State -->
+    <div id="emptyState" style="display: none">
+      <div class="empty-icon">📄</div>
+      <h3>No jobs available</h3>
+      <p>Check back soon for new job opportunities</p>
+    </div>
 
-</body>
-</body>
+    <!-- Jobs Container -->
+    <div id="jobsContainer"></div>
+
+    <script src="script.js"></script>
+  </body>
 </html>
+
 
