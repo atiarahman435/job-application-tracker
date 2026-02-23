@@ -11,7 +11,7 @@ const jobs = [
     type: "Full-time",
     salary: "$130,000 - $175,000",
     description:
-      "Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.",
+      "Build cross-platform mobile applications using React Native.",
     status: "none",
   },
   {
@@ -21,8 +21,7 @@ const jobs = [
     location: "Los Angeles, CA",
     type: "Part-time",
     salary: "$80,000 - $120,000",
-    description:
-      "Create stunning web experiences for high-profile clients.",
+    description: "Create modern and responsive web experiences.",
     status: "none",
   },
   {
@@ -32,8 +31,7 @@ const jobs = [
     location: "Boston, MA",
     type: "Full-time",
     salary: "$125,000 - $165,000",
-    description:
-      "Transform complex data into compelling visualizations.",
+    description: "Transform complex data into powerful visuals.",
     status: "none",
   },
   {
@@ -43,8 +41,7 @@ const jobs = [
     location: "Seattle, WA",
     type: "Full-time",
     salary: "$140,000 - $190,000",
-    description:
-      "Design and maintain scalable backend systems using Python and AWS.",
+    description: "Maintain scalable backend systems.",
     status: "none",
   },
   {
@@ -54,8 +51,7 @@ const jobs = [
     location: "Austin, TX",
     type: "Full-time",
     salary: "$110,000 - $150,000",
-    description:
-      "Create beautiful and functional user interfaces.",
+    description: "Design clean and user-friendly interfaces.",
     status: "none",
   },
   {
@@ -65,8 +61,7 @@ const jobs = [
     location: "New York, NY",
     type: "Full-time",
     salary: "$130,000 - $170,000",
-    description:
-      "Build enterprise applications using JavaScript.",
+    description: "Build modern web applications.",
     status: "none",
   },
   {
@@ -76,8 +71,7 @@ const jobs = [
     location: "Remote",
     type: "Full-time",
     salary: "$120,000 - $160,000",
-    description:
-      "Work on a fast-growing startup platform.",
+    description: "Work on scalable startup products.",
     status: "none",
   },
   {
@@ -87,29 +81,58 @@ const jobs = [
     location: "San Francisco, CA",
     type: "Full-time",
     salary: "$130,000 - $175,000",
-    description:
-      "Build scalable web applications using React.",
+    description: "Build scalable web platforms.",
     status: "none",
   },
 ];
 
 // =======================
-// Get Container
+// DOM Elements
 // =======================
 
 const jobsContainer = document.getElementById("jobsContainer");
+const emptyState = document.getElementById("emptyState");
+const tabCountText = document.getElementById("tabCountText");
+const tabButtons = document.querySelectorAll("[data-tab]");
+
+let activeTab = "all";
 
 // =======================
-// Render Function
+// Filter Function
+// =======================
+
+function getFilteredJobs() {
+  if (activeTab === "all") return jobs;
+  if (activeTab === "interview")
+    return jobs.filter((job) => job.status === "Interview");
+  if (activeTab === "rejected")
+    return jobs.filter((job) => job.status === "Rejected");
+
+  return jobs;
+}
+
+// =======================
+// Render Jobs
 // =======================
 
 function renderJobs() {
+  const filteredJobs = getFilteredJobs();
+
+  tabCountText.textContent = filteredJobs.length + " jobs";
+
+  if (filteredJobs.length === 0) {
+    jobsContainer.innerHTML = "";
+    emptyState.style.display = "block";
+    return;
+  } else {
+    emptyState.style.display = "none";
+  }
+
   let cards = "";
 
-  for (let i = 0; i < jobs.length; i++) {
-    const job = jobs[i];
+  for (let i = 0; i < filteredJobs.length; i++) {
+    const job = filteredJobs[i];
 
-    // Badge logic
     let badgeText = "NOT APPLIED";
     let badgeColor = "#007bff";
 
@@ -123,23 +146,22 @@ function renderJobs() {
       badgeColor = "#dc3545";
     }
 
-    // Card HTML
     cards += `
       <div style="border:1px solid #ccc; padding:15px; margin:10px 0; border-radius:8px;">
         
         <div style="display:flex; justify-content:space-between; align-items:center;">
-  <div>
-    <h3>${job.companyName}</h3>
-    <h4>${job.position}</h4>
-  </div>
+          <div>
+            <h3>${job.companyName}</h3>
+            <h4>${job.position}</h4>
+          </div>
 
-  <button 
-    data-id="${job.id}" 
-    data-action="delete"
-    style="background:none; border:none; font-size:18px; cursor:pointer;">
-    🗑️
-  </button>
-</div>
+          <button 
+            data-id="${job.id}" 
+            data-action="delete"
+            style="background:none; border:none; font-size:18px; cursor:pointer;">
+            🗑️
+          </button>
+        </div>
 
         <span style="display:inline-block; padding:5px 10px; background:#e0f2ff; color:${badgeColor}; font-size:12px; border-radius:5px;">
           ${badgeText}
@@ -174,30 +196,43 @@ function renderJobs() {
 }
 
 // =======================
-// Button Click Logic
+// Click Logic
 // =======================
 
 jobsContainer.addEventListener("click", function (e) {
-  const button = e.target;
-
-  if (!button.dataset.action) return;
+  const button = e.target.closest("[data-action]");
+  if (!button) return;
 
   const jobId = Number(button.dataset.id);
   const action = button.dataset.action;
 
-  for (let i = 0; i < jobs.length; i++) {
-    if (jobs[i].id === jobId) {
-      if (action === "interview") {
-        jobs[i].status = "Interview";
-      }
+  if (action === "delete") {
+    const index = jobs.findIndex((job) => job.id === jobId);
+    if (index !== -1) jobs.splice(index, 1);
+  }
 
-      if (action === "rejected") {
-        jobs[i].status = "Rejected";
-      }
-    }
+  if (action === "interview") {
+    const job = jobs.find((job) => job.id === jobId);
+    if (job) job.status = "Interview";
+  }
+
+  if (action === "rejected") {
+    const job = jobs.find((job) => job.id === jobId);
+    if (job) job.status = "Rejected";
   }
 
   renderJobs();
+});
+
+// =======================
+// Tab Click Logic
+// =======================
+
+tabButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    activeTab = btn.dataset.tab;
+    renderJobs();
+  });
 });
 
 // Initial render
