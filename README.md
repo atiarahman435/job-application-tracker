@@ -13,7 +13,7 @@ https://github.com/atiarahman435/job-application-tracker
 
 ## 🔗 Live Site
 
-(Add your GitHub Pages link here)
+https://atiarahman435.github.io/job-application-tracker/
 
 ---
 

@@ -1,7 +1,3 @@
-// =======================
-// Job Data
-// =======================
-
 const jobs = [
   {
     id: 1,
@@ -85,9 +81,7 @@ const jobs = [
   },
 ];
 
-// =======================
-// DOM Elements
-// =======================
+
 
 const jobsContainer = document.getElementById("jobsContainer");
 const emptyState = document.getElementById("emptyState");
@@ -96,9 +90,7 @@ const tabButtons = document.querySelectorAll("[data-tab]");
 
 let activeTab = "all";
 
-// =======================
-// Filter Function
-// =======================
+
 
 function getFilteredJobs() {
   if (activeTab === "all") return jobs;
@@ -110,9 +102,7 @@ function getFilteredJobs() {
   return jobs;
 }
 
-// =======================
-// Render Function
-// =======================
+
 
 function renderJobs() {
   const filteredJobs = getFilteredJobs();
@@ -191,9 +181,7 @@ function renderJobs() {
   jobsContainer.innerHTML = cards;
 }
 
-// =======================
-// Button Click Logic
-// =======================
+
 
 jobsContainer.addEventListener("click", function (e) {
   const button = e.target.closest("[data-action]");
@@ -220,9 +208,7 @@ jobsContainer.addEventListener("click", function (e) {
   renderJobs();
 });
 
-// =======================
-// Tab Click Logic
-// =======================
+
 
 tabButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -231,5 +217,5 @@ tabButtons.forEach((btn) => {
   });
 });
 
-// Initial render
+
 renderJobs();
