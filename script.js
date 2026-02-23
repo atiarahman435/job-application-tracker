@@ -10,8 +10,7 @@ const jobs = [
     location: "Remote",
     type: "Full-time",
     salary: "$130,000 - $175,000",
-    description:
-      "Build cross-platform mobile applications using React Native.",
+    description: "Build cross-platform mobile applications using React Native.",
     status: "none",
   },
   {
@@ -112,7 +111,7 @@ function getFilteredJobs() {
 }
 
 // =======================
-// Render Jobs
+// Render Function
 // =======================
 
 function renderJobs() {
@@ -130,26 +129,11 @@ function renderJobs() {
 
   let cards = "";
 
-  for (let i = 0; i < filteredJobs.length; i++) {
-    const job = filteredJobs[i];
-
-    let badgeText = "NOT APPLIED";
-    let badgeColor = "#007bff";
-
-    if (job.status === "Interview") {
-      badgeText = "INTERVIEW";
-      badgeColor = "#28a745";
-    }
-
-    if (job.status === "Rejected") {
-      badgeText = "REJECTED";
-      badgeColor = "#dc3545";
-    }
-
+  filteredJobs.forEach((job) => {
     cards += `
-      <div style="border:1px solid #ccc; padding:15px; margin:10px 0; border-radius:8px;">
+      <div class="job-card">
         
-        <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div class="job-header">
           <div>
             <h3>${job.companyName}</h3>
             <h4>${job.position}</h4>
@@ -158,13 +142,25 @@ function renderJobs() {
           <button 
             data-id="${job.id}" 
             data-action="delete"
-            style="background:none; border:none; font-size:18px; cursor:pointer;">
+            class="delete-btn">
             🗑️
           </button>
         </div>
 
-        <span style="display:inline-block; padding:5px 10px; background:#e0f2ff; color:${badgeColor}; font-size:12px; border-radius:5px;">
-          ${badgeText}
+        <span class="badge ${
+          job.status === "Interview"
+            ? "badge-interview"
+            : job.status === "Rejected"
+            ? "badge-rejected"
+            : "badge-default"
+        }">
+          ${
+            job.status === "Interview"
+              ? "INTERVIEW"
+              : job.status === "Rejected"
+              ? "REJECTED"
+              : "NOT APPLIED"
+          }
         </span>
 
         <p><strong>Location:</strong> ${job.location}</p>
@@ -172,31 +168,31 @@ function renderJobs() {
         <p><strong>Salary:</strong> ${job.salary}</p>
         <p>${job.description}</p>
 
-        <div style="margin-top:10px;">
+        <div class="actions">
           <button 
             data-id="${job.id}" 
             data-action="interview"
-            style="padding:6px 12px; margin-right:5px; background:#28a745; color:white; border:none; border-radius:4px; cursor:pointer;">
+            class="btn-interview">
             Interview
           </button>
 
           <button 
             data-id="${job.id}" 
             data-action="rejected"
-            style="padding:6px 12px; background:#dc3545; color:white; border:none; border-radius:4px; cursor:pointer;">
+            class="btn-rejected">
             Rejected
           </button>
         </div>
 
       </div>
     `;
-  }
+  });
 
   jobsContainer.innerHTML = cards;
 }
 
 // =======================
-// Click Logic
+// Button Click Logic
 // =======================
 
 jobsContainer.addEventListener("click", function (e) {
